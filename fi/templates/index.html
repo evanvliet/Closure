@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <title>Find words</title>
+        <STYLE TYPE="text/css">
+            <!--
+            BODY
+            {
+                font-family: courier;
+                font-size: 20px;
+            }
+            -->
+        </STYLE>
+        <script type="text/javascript">
+    	function on_load() {
+    		document.form_page.letters.focus();
+    		document.form_page.letters.value = 'aemrst';
+    		find_words();
+    	}
+    	function find_words() {
+            var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        var value = ['&nbsp;','&nbsp;','&nbsp;','&nbsp;','&nbsp;'];
+                        value = value.concat(JSON.parse(xmlhttp.responseText));
+                        inHtml = ['<div>'];
+                        inHtml = inHtml.concat(value.slice(-5).join('</div><div>'));
+                        inHtml.push('</div>');
+                        document.getElementById('words').innerHTML = inHtml.join('');
+                        delete inHtml;
+	                }
+                }
+                xmlhttp.open("GET", '/words/' + document.form_page.letters.value);
+                xmlhttp.send();
+        	}
+        </script>
+    </head>
+    <body onload="on_load()">
+    <form name="form_page">
+        <div 
+        	id="words" 
+        	style="height:130;overflow:hidden">
+        </div>
+   		<input 
+   			type="text" 
+   			style="font-size:20px; width:120px" 
+   			name="letters" 
+   			autocomplete="off" 
+   			onkeyup="find_words()"/>
+    </form>
+    </body>
+</html>
