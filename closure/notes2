@@ -1,0 +1,69 @@
+0.2 17917  4892 gurgled
+0.4 20221  6614 naturals
+0.6 22078  8210 sprug
+0.8 23340  9454 tusches
+1.0 24354 10979 sauchs
+1.2 25092 12473 funker
+1.4 25650 13950 cranny
+1.6 26084 15385 gleaner
+1.8 26404 16741 blaffs
+2.0 26589 18015 farina
+2.2 26665 19430 forrays
+2.4 26720 20864 purtiest
+2.6 26760 22294 ora
+2.8 26637 23707 yonks
+3.0 26538 24917 squinted
+3.2 26230 26362 oleum
+3.4 26066 27797 mamzer
+3.6 25647 29236 clog
+3.8 25314 30673 wallop
+4.0 24918 32049 cowrites
+4.2 24618 33414 dromical
+4.4 23977 34909 peddled
+4.6 23645 36175 weep
+4.8 23072 37651 chaco
+5.0 22456 39191 uruses
+5.2 21933 40528 retrack
+5.4 21366 42101 arsed
+5.6 20831 43684 formate
+5.8 20181 45262 chazans
+6.0 19617 46866 inlacing
+6.2 18846 48488 recouping
+6.4 18092 49958 frailty
+6.6 17263 51617 spill
+6.8 16121 53585 bogarts
+7.0 12470 59451 reen
+7.2  6452 68773 lecture
+78482 neighbors after  436.57 seconds
+
+
+Finding files... done.
+Importing test modules ... ==== W:\eric\git\w\closure
+==== --port
+==== 54555
+==== --verbosity
+==== 0
+done.
+
+CountNetwork
+78768 - with transpositions
+----------------------------------------------------------------------
+Ran 10 tests in 19.655s
+
+OK
+
+
+Finding files... done.
+Importing test modules ... ==== W:\eric\git\w\closure
+==== --port
+==== 54564
+==== --verbosity
+==== 0
+done.
+
+78482 - no transpositions
+----------------------------------------------------------------------
+Ran 10 tests in 17.787s
+
+OK
+
