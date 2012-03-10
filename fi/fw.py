@@ -33,10 +33,6 @@ def build(request):
     logging.info('Words %.2f' % (time.clock() - _start))
     _last = time.clock()
     _cutoff = _start + .3 * 60.0
-    word_data = defaultdict(list)
-    for i in Words:
-        word_data[''.join(sorted(i))].append(i)
-    logging.info('word_data %.2f' % (time.clock() - _last))
     buf = []
     inc = 10
     for k in word_data:
