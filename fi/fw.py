@@ -26,7 +26,7 @@ def home(request):
             'index.html').render(Context({})))
 
 def find_words(request, word):
-    # dev_debug.debug_break()
+    dev_debug.debug_break()
     anagram_signature = ''.join(sorted(word.lower()))
     anagram = word_data.get(anagram_signature, [''])
     friends = ocms.suggestions(word)

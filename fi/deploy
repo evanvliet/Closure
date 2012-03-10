@@ -1,0 +1,12 @@
+#!/bin/bash
+comment="$*"
+if test -z "$comment" 
+then
+    echo enter comment for this drop
+    read comment
+fi
+let n=$(git tag -l | sed -n '$s/.*\.//p')+1
+tag_name=$(git tag -l | sed -n '$s/\..*$//p').$n
+git ci -m "$comment"
+git tag -a -m "comment" $tag_name
+appcfg.py update .
