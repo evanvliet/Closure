@@ -32,6 +32,22 @@
                 xmlhttp.open("GET", '/words/' + document.form_page.letters.value);
                 xmlhttp.send();
         	}
+    	function find_ocms() {
+            var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        var value = ['&nbsp;','&nbsp;','&nbsp;','&nbsp;','&nbsp;'];
+                        value = value.concat(JSON.parse(xmlhttp.responseText));
+                        inHtml = ['<div>'];
+                        inHtml = inHtml.concat(value.slice(-5).join('</div><div>'));
+                        inHtml.push('</div>');
+                        document.getElementById('suggestions').innerHTML = inHtml.join('');
+                        delete inHtml;
+	                }
+                }
+                xmlhttp.open("GET", '/ocms/' + document.form_page.suggestions.value);
+                xmlhttp.send();
+        	}
         </script>
     </head>
     <body onload="on_load()">
@@ -46,6 +62,16 @@
    			name="letters" 
    			autocomplete="off" 
    			onkeyup="find_words()"/>
+        <div 
+        	id="suggestions" 
+        	style="height:130;overflow:hidden">
+        </div>
+   		<input 
+   			type="text" 
+   			style="font-size:20px; width:120px" 
+   			name="suggestions" 
+   			autocomplete="off" 
+   			onkeyup="find_ocms()"/>
     </form>
     </body>
 </html>

@@ -1,7 +1,7 @@
 '''Unittests for one_character_misspelling_suggestions.'''
 import unittest
-from one_character_misspelling_suggestions import suggestions
-from one_character_misspelling_suggestions.words import Words
+from ocms import suggestions
+from ocms.words import Words
 
 class Word_List(unittest.TestCase):
     def runTest(self):
