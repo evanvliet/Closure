@@ -14,9 +14,6 @@ word_data = defaultdict(list)
 for i in ocms.Words:
     word_data[''.join(sorted(i))].append(i)
 
-def canon(word):
-    return sorted(word)
-
 class Anagram(db.Model):
     words = db.StringListProperty()
 
