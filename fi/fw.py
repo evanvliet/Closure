@@ -29,10 +29,9 @@ def home(request):
 
 def build(request):
     dev_debug.debug_break()
-    n, _start = 0, time.clock()
-    logging.info('Words %.2f' % (time.clock() - _start))
+    n, _start = 0, time.time()
     _last = time.clock()
-    _cutoff = _start + .3 * 60.0
+    _cutoff = time.time() + .1 * 60.0
     buf = []
     inc = 10
     for k in word_data:
@@ -48,14 +47,14 @@ def build(request):
             buf = []
             logging.info('%6d Anagrams %.2f' % (inc, n_rate))
             inc = min(1000, int(inc * 1.5))
-        if time.clock() > _cutoff:
+        if time.time() > _cutoff:
             break
             
     n += len(db.put(buf))
     logging.info('%6d Anagrams %.2f' % (n, time.clock() - _last))
     json = simplejson.dumps({
                              'Anagrams': n,
-                             'time': (time.clock() - _start),
+                             'time': (time.time() - _start),
                              })
     return HttpResponse(json, mimetype='application/json')
 
