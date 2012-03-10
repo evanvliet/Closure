@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from django.template import Context, loader
 from google.appengine.ext import db
 import ocms
+import dev_debug
 
 from collections import defaultdict
 word_data = defaultdict(list)
@@ -25,9 +26,14 @@ def home(request):
             'index.html').render(Context({})))
 
 def find_words(request, word):
+    # dev_debug.debug_break()
     anagram_signature = ''.join(sorted(word.lower()))
     anagram = word_data.get(anagram_signature, [''])
-    json = simplejson.dumps(anagram)
+    friends = ocms.suggestions(word)
+    json = simplejson.dumps({
+                             'fw': anagram,
+                             'ocms': list(sorted(friends))[:5],
+                             })
     return HttpResponse(json, mimetype='application/json')
 
 

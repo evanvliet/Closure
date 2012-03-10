@@ -19,13 +19,21 @@ BODY {
             var xmlhttp = new XMLHttpRequest();
                 xmlhttp.onreadystatechange = function() {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        var data = JSON.parse(xmlhttp.responseText)
                         var value = ['&nbsp;','&nbsp;','&nbsp;','&nbsp;','&nbsp;'];
-                        value = value.concat(JSON.parse(xmlhttp.responseText));
-                        inHtml = ['<div>'];
+                        value = value.concat(data['fw']);
+                        var inHtml = ['<div>'];
                         inHtml = inHtml.concat(value.slice(-5).join('</div><div>'));
                         inHtml.push('</div>');
                         document.getElementById('words').innerHTML = inHtml.join('');
+                        value = data['ocms'];
+                        inHtml = ['<div>'];
+                        inHtml = inHtml.concat(value.join('</div><div>'));
+                        inHtml.push('</div>');
+                        document.getElementById('suggestions').innerHTML = inHtml.join('');
                         delete inHtml;
+                        delete value;
+                        delete data;
 	                }
                 }
                 xmlhttp.open("GET", '/words/' + document.form_page.letters.value);
@@ -51,19 +59,11 @@ BODY {
 </head>
 <body onload="on_load()">
 	<form name="form_page">
-		<div style="float: left">
-			<div id="words" style="height: 130; overflow: hidden"></div>
+		<div id="words" style="height: 130; overflow: hidden"></div>
 			<input type="text" style="font-size: 20px; width: 120px"
 				name="letters" autocomplete="off" onkeyup="find_words()" />
+			<div id="suggestions" style="height: 130; margin-top: 12px; overflow: hidden"></div>
 		</div>
-
-		<div style="float: left; margin-left: 20">
-			<div id="suggestions" style="height: 130; overflow: hidden"></div>
-			<input type="text" style="font-size: 20px; width: 120px"
-				name="suggestions" autocomplete="off" onkeyup="find_ocms()" />
-		</div>
-		<div style="float: left; width: 80px">&nbsp;</div>
-		
 	</form>
 </body>
 </html>
