@@ -7,8 +7,11 @@ then
 fi
 let n=$(git tag -l | sed -n '$s/.*\.//p')+1
 tag_name=$(git tag -l | sed -n '$s/\..*$//p').$n
+git pull
 git ci -m "$comment"
+git push
 git tag -a -m "$comment" $tag_name
 git push --tags
 appcfg.py update .
+echo
 echo deployed $tag_name - $comment

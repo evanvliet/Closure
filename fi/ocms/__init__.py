@@ -1,3 +1,4 @@
+'''one character misspelling checker'''
 import string
 from words import Words as Words
 
