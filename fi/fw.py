@@ -31,11 +31,12 @@ def build(request):
     dev_debug.debug_break()
     n, _start = 0, time.clock()
     logging.info('Words %.2f' % (time.clock() - _start))
-    _start = time.clock()
+    _last = time.clock()
+    _cutoff = _start + .3 * 60.0
     word_data = defaultdict(list)
     for i in Words:
         word_data[''.join(sorted(i))].append(i)
-    logging.info('word_data %.2f' % (time.clock() - _start))
+    logging.info('word_data %.2f' % (time.clock() - _last))
     buf = []
     inc = 10
     for k in word_data:
@@ -44,22 +45,26 @@ def build(request):
             db.put(buf)
             n_added = len(buf)
             n_lapsed = time.clock()
-            lapsed_time = n_lapsed = _start
-            _start = n_lapsed
+            lapsed_time = n_lapsed = _last
+            _last = n_lapsed
             n_rate = n_added / n_lapsed
+            n += n_added
             buf = []
             logging.info('%6d Anagrams %.2f' % (inc, n_rate))
             inc = min(1000, int(inc * 1.5))
+        if time.clock() > _cutoff:
+            break
             
     n += len(db.put(buf))
-    logging.info('%6d Anagrams %.2f' % (n, time.clock() - _start))
+    logging.info('%6d Anagrams %.2f' % (n, time.clock() - _last))
     json = simplejson.dumps({
-                             'task': 'build database',
+                             'Anagrams': n,
                              'time': (time.clock() - _start),
                              })
     return HttpResponse(json, mimetype='application/json')
 
 def find_words(request, word):
+    import ocms
     anagram_signature = ''.join(sorted(word.lower()))
     anagram = word_data.get(anagram_signature, [''])
     friends = ocms.suggestions(word)
@@ -69,9 +74,4 @@ def find_words(request, word):
                              })
     return HttpResponse(json, mimetype='application/json')
 
-
-def suggest_words(request, word):
-    friends = ocms.suggestions(word)
-    json = simplejson.dumps(list(friends))
-    return HttpResponse(json, mimetype='application/json')
 
