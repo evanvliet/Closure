@@ -3,8 +3,17 @@
 import os
 ROOT_PATH = os.path.dirname(__file__)
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
+SITE_ID = 1
+
+if 'SERVER_SOFTWARE' in os.environ and os.environ['SERVER_SOFTWARE'].find('Development') >= 0:
+    DEBUG = True
+    SITE_ID = 2
+
+def in_the_cloud():
+    return SITE_ID == 1
+
 
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
@@ -36,7 +45,6 @@ TIME_ZONE = 'America/Chicago'
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
 
-SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
