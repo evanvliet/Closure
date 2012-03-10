@@ -1,16 +1,15 @@
 <html>
-    <head>
-        <title>Find words</title>
-        <STYLE TYPE="text/css">
-            <!--
-            BODY
-            {
-                font-family: courier;
-                font-size: 20px;
-            }
-            -->
-        </STYLE>
-        <script type="text/javascript">
+<head>
+<title>Find words</title>
+<STYLE TYPE="text/css">
+<!--
+BODY {
+	font-family: courier;
+	font-size: 20px;
+}
+-->
+</STYLE>
+<script type="text/javascript">
     	function on_load() {
     		document.form_page.letters.focus();
     		document.form_page.letters.value = 'aemrst';
@@ -49,29 +48,22 @@
                 xmlhttp.send();
         	}
         </script>
-    </head>
-    <body onload="on_load()">
-    <form name="form_page">
-        <div 
-        	id="words" 
-        	style="height:130;overflow:hidden">
-        </div>
-   		<input 
-   			type="text" 
-   			style="font-size:20px; width:120px" 
-   			name="letters" 
-   			autocomplete="off" 
-   			onkeyup="find_words()"/>
-        <div 
-        	id="suggestions" 
-        	style="height:130;overflow:hidden">
-        </div>
-   		<input 
-   			type="text" 
-   			style="font-size:20px; width:120px" 
-   			name="suggestions" 
-   			autocomplete="off" 
-   			onkeyup="find_ocms()"/>
-    </form>
-    </body>
+</head>
+<body onload="on_load()">
+	<form name="form_page">
+		<div style="float: left">
+			<div id="words" style="height: 130; overflow: hidden"></div>
+			<input type="text" style="font-size: 20px; width: 120px"
+				name="letters" autocomplete="off" onkeyup="find_words()" />
+		</div>
+
+		<div style="float: left; width: 130px">&nbsp;</div>
+		
+		<div style="float: left">
+			<div id="suggestions" style="height: 130; overflow: hidden"></div>
+			<input type="text" style="font-size: 20px; width: 120px"
+				name="suggestions" autocomplete="off" onkeyup="find_ocms()" />
+		</div>
+	</form>
+</body>
 </html>
