@@ -1,6 +1,12 @@
 '''one character misspelling checker'''
 import string
+import time
+import logging
+
+_start = time.clock()
+#from w1 import Words as Words
 from words import Words as Words
+logging.info('Words %.2f' % (time.clock() - _start))
 
 #_Words = set([word.strip() for word in open('wlist.causes')])
 _Letters = set('abcdefghijklmnopqrstuvwxyz')
