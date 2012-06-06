@@ -5,7 +5,7 @@ then
     echo enter comment for this drop
     read comment
 fi
-let n=$(git tag -l | sed -n '$s/.*\.//p')+1
+let n=$(git tag -l | sed -n 's/r0\.//p' | sort -n | tail -1)+1
 tag_name=$(git tag -l | sed -n '$s/\..*$//p').$n
 git pull
 git ci -m "$comment"
