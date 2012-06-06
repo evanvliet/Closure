@@ -10,12 +10,13 @@ the social network for the word "causes" is, using words from
 (https://github.com/causes/puzzles/raw/master/word_friends/word.list).
 '''
 import time
-from one_character_misspelling_suggestions import suggestions
+# from one_character_misspelling_suggestions import suggestions
+from ocvid import neighbors
 
 def count(word):
     unscanned, network = set(), set()
     while word:
         network.add(word)
-        unscanned |= suggestions(word) - network
+        unscanned |= neighbors(word) - network
         word = unscanned.pop() if unscanned else ''
     return len(network)

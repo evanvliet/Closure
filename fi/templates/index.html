@@ -1,11 +1,19 @@
+<!DOCTYPE html>
 <html>
 <head>
 <title>Find words</title>
 <STYLE TYPE="text/css">
 <!--
-BODY {
+#output {
 	font-family: courier;
 	font-size: 20px;
+    float: left;
+    width: 200px;
+}
+#help {
+  font-family: arial;
+  font-size: 12px;
+  width: 490px;
 }
 -->
 </STYLE>
@@ -42,12 +50,26 @@ BODY {
         </script>
 </head>
 <body onload="on_load()">
-	<form name="form_page">
-		<div id="words" style="height: 130; overflow: hidden"></div>
-			<input type="text" style="font-size: 20px; width: 120px"
-				name="letters" autocomplete="off" onkeyup="find_words()" />
-			<div id="suggestions" style="height: 130; margin-top: 12px; overflow: hidden"></div>
-		</div>
-	</form>
+  <form name="form_page">
+    <div id="output">
+      <div id="words" style="height: 130; overflow: hidden">
+      </div>
+      <div>
+      <input type="text" style="font-size: 20px; width: 120px"
+        name="letters" autocomplete="off" onkeyup="find_words()" />
+      </div>
+      <div id="suggestions"
+        style="height: 130; margin-top: 12px; overflow: hidden">
+      </div>
+    </div>
+    <div id="help">
+    <h2>Word Finder</h2>
+      As you type letters, anagrams appear above the box.
+      <p>And one letter variants of your word appear below.
+      <p>
+      Try pressing delete repeatedly, when you get down to <b><big>aem</big></b> you see <b><big>ae, ahem</big></big></b>, ... the
+        words that differ by just one letter.
+    </div>
+  </form>
 </body>
 </html>

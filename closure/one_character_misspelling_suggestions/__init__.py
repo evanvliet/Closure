@@ -1,8 +1,7 @@
 import string
-from words import Words as _Words
 
-#_Words = set([word.strip() for word in open('wlist.causes')])
-_Letters = set('abcdefghijklmnopqrstuvwxyz')
+_Words = set([word.strip() for word in file('data/wlist.causes')])
+_Letters = set(string.lowercase)
 
 def suggestions(word):
     '''Return all one letter variants of a word.'''
@@ -17,4 +16,4 @@ def suggestions(word):
 
 if __name__ == '__main__':
     # test case
-    print ', '.join(suggestions('able'))
+    print ','.join(suggestions('able'))
