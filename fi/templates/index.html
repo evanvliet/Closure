@@ -7,68 +7,70 @@
 #output {
 	font-family: courier;
 	font-size: 20px;
-    float: left;
-    width: 200px;
+	float: left;
+	width: 200px;
 }
+
 #help {
-  font-family: arial;
-  font-size: 12px;
-  width: 490px;
+	font-family: arial;
+	font-size: 12px;
+	width: 490px;
 }
 -->
 </STYLE>
 <script type="text/javascript">
-    	function on_load() {
-    		document.form_page.letters.focus();
-    		document.form_page.letters.value = 'aemrst';
-    		find_words();
-    	}
-    	function find_words() {
-            var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                        var data = JSON.parse(xmlhttp.responseText)
-                        var value = ['&nbsp;','&nbsp;','&nbsp;','&nbsp;','&nbsp;'];
-                        value = value.concat(data['fw']);
-                        var inHtml = ['<div>'];
-                        inHtml = inHtml.concat(value.slice(-5).join('</div><div>'));
-                        inHtml.push('</div>');
-                        document.getElementById('words').innerHTML = inHtml.join('');
-                        value = data['ocms'];
-                        inHtml = ['<div>'];
-                        inHtml = inHtml.concat(value.join('</div><div>'));
-                        inHtml.push('</div>');
-                        document.getElementById('suggestions').innerHTML = inHtml.join('');
-                        delete inHtml;
-                        delete value;
-                        delete data;
-	                }
-                }
-                xmlhttp.open("GET", '/words/' + document.form_page.letters.value);
-                xmlhttp.send();
-        	}
-        </script>
+	function on_load() {
+		document.form_page.letters.focus();
+		document.form_page.letters.value = 'aemrst';
+		find_words();
+	}
+	function find_words() {
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				var data = JSON.parse(xmlhttp.responseText)
+				var value = [ '&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;' ];
+				value = value.concat(data['fw']);
+				var inHtml = [ '<div>' ];
+				inHtml = inHtml.concat(value.slice(-5).join('</div><div>'));
+				inHtml.push('</div>');
+				document.getElementById('words').innerHTML = inHtml.join('');
+				value = data['ocms'];
+				inHtml = [ '<div>' ];
+				inHtml = inHtml.concat(value.join('</div><div>'));
+				inHtml.push('</div>');
+				document.getElementById('suggestions').innerHTML = inHtml
+						.join('');
+				delete inHtml;
+				delete value;
+				delete data;
+			}
+		}
+		xmlhttp.open("GET", '/words/' + document.form_page.letters.value);
+		xmlhttp.send();
+	}
+</script>
 </head>
 <body onload="on_load()">
   <form name="form_page">
     <div id="output">
-      <div id="words" style="height: 130; overflow: hidden">
-      </div>
+      <div id="words" style="height: 130; overflow: hidden"></div>
       <div>
-      <input type="text" style="font-size: 20px; width: 120px"
-        name="letters" autocomplete="off" onkeyup="find_words()" />
+        <input type="text" style="font-size: 20px; width: 120px"
+          name="letters" autocomplete="off" onkeyup="find_words()" />
       </div>
       <div id="suggestions"
-        style="height: 130; margin-top: 12px; overflow: hidden">
-      </div>
+        style="height: 130; margin-top: 12px; overflow: hidden"></div>
     </div>
     <div id="help">
-    <h2>Word Finder</h2>
-      As you type letters, anagrams appear above the box.
-      <p>And one letter variants of your word appear below.
+      <h2>Word Finder</h2>
+      Finds anagrams and one letter variants.
       <p>
-      Try pressing delete repeatedly, when you get down to <b><big>aem</big></b> you see <b><big>ae, ahem</big></big></b>, ... the
-        words that differ by just one letter.
+        For example, entering <b><big>aem</big>
+        </b> yields just the one anagram, <b><big>mae</big>
+        </b>, above the input field and <b><big>ae, ahem</big><big></big>
+        </b>, ... the words that differ by just one letter below the line,
+        below.
     </div>
   </form>
 </body>
