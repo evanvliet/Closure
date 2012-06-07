@@ -13,8 +13,9 @@ _Letters = set('abcdefghijklmnopqrstuvwxyz')
 
 def suggestions(word):
     '''Return all one letter variants of a word.'''
-    if set(word) - _Letters:
-        raise ValueError(''.join(set(word) - _Letters))
+    bad_chars = ''.join(set(word) - _Letters)
+    if bad_chars:
+        raise ValueError(bad_chars)
     parts = [(word[:i], word[i:]) for i in range(len(word) + 1)]
     adds = [a + c + b for a, b in parts for c in _Letters]
     removes = [a + b[1:] for a, b in parts if b]
