@@ -4,11 +4,13 @@ from ocms import suggestions
 from ocms.words import Words
 import logging
 import time
-from anagrams import word_data
+# from anagrams import word_data
 
+'''
 class Anagrams_Test(unittest.TestCase):
     def runTest(self):
         assert(word_data['ackkns'] == ['knacks'])
+'''
 
 class Anagram_Dump(unittest.TestCase):
     def runTest(self):
@@ -17,7 +19,8 @@ class Anagram_Dump(unittest.TestCase):
         word_data = defaultdict(list)
         for i in Words:
             word_data[''.join(sorted(i))].append(i)
-        logging.info('word_data %.2f' % (time.clock() - _start))
+        print 'word_data %.2f' % (time.clock() - _start)
+        _start = time.clock()
         dict_file = open('/Volumes/FAT/dev/fi/anagrams.py', 'w')
         dict_file.write("word_data = {\n")
         for signature in word_data:
@@ -26,6 +29,11 @@ class Anagram_Dump(unittest.TestCase):
         n = dict_file.tell()
         print n
         dict_file.close()
+        word_data = []
+        _start = time.clock()
+        exec open('/Volumes/FAT/dev/fi/anagrams.py').read()
+        assert(word_data['ackkns'] == ['knacks'])
+        print time.clock() - _start
         assert n > 200500
 
 class Word_List(unittest.TestCase):

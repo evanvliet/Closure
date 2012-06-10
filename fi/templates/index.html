@@ -1,46 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Find words</title>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+<link rel="apple-touch-icon" href="/fi.png"/>
 <STYLE TYPE="text/css">
 <!--
-#output {
-	font-family: courier;
-	font-size: 20px;
-	float: left;
-	width: 200px;
+div.output {
+    width: 95%;
+    font-size: 16px;
 }
 
 #help {
 	font-family: arial;
 	font-size: 12px;
 	width: 490px;
+    display: none;
 }
 -->
 </STYLE>
 <script type="text/javascript">
+    //When ready...
+    window.addEventListener("load",function() {
+    	// Set a timeout...
+    	setTimeout(function(){
+    		// Hide the address bar!
+    		window.scrollTo(0, 1);
+    	}, 0);
+    });
 	function on_load() {
-		document.form_page.letters.focus();
 		document.form_page.letters.value = 'aemrst';
 		find_words();
+		document.form_page.letters.focus();
 	}
 	function find_words() {
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function() {
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 				var data = JSON.parse(xmlhttp.responseText)
-				var value = [ '&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;' ];
-				value = value.concat(data['fw']);
-				var inHtml = [ '<div>' ];
-				inHtml = inHtml.concat(value.slice(-5).join('</div><div>'));
-				inHtml.push('</div>');
-				document.getElementById('words').innerHTML = inHtml.join('');
+				var value = data['fw'];
+				document.getElementById('words').innerHTML = '<small><b>anagrams:</b></small> ' + value.join(', ');
 				value = data['ocms'];
-				inHtml = [ '<div>' ];
-				inHtml = inHtml.concat(value.join('</div><div>'));
-				inHtml.push('</div>');
-				document.getElementById('suggestions').innerHTML = inHtml
-						.join('');
+				inHtml = value.length ? '<small><b>similar:</b></small> ' + value.join(', ') : '';
+				document.getElementById('suggestions').innerHTML = inHtml;
+				document.form_page.letters.focus();
 				delete inHtml;
 				delete value;
 				delete data;
@@ -48,20 +51,19 @@
 		}
 		xmlhttp.open("GET", '/words/' + document.form_page.letters.value);
 		xmlhttp.send();
+		document.form_page.letters.focus();
 	}
 </script>
+<title>Find words</title>
 </head>
 <body onload="on_load()">
   <form name="form_page">
-    <div id="output">
-      <div id="words" style="height: 130; overflow: hidden"></div>
       <div>
-        <input type="text" style="font-size: 20px; width: 120px"
-          name="letters" autocomplete="off" onkeyup="find_words()" />
+        <input type="text" style="font-size: 14px; width: 120px"
+          name="letters" autocorrect="off" autocomplete="off" onkeyup="find_words()" />
       </div>
-      <div id="suggestions"
-        style="height: 130; margin-top: 12px; overflow: hidden"></div>
-    </div>
+      <div class="output" id="words"></div>
+      <div class="output" id="suggestions"></div>
     <div id="help">
       <h2>Word Finder</h2>
       Finds anagrams and one letter variants.
