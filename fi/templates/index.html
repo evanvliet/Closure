@@ -54,15 +54,14 @@ div.output {
 				document.getElementById('for').innerHTML = 
 					value.length ? '<small><b>for:</b></small> ' + value : '';
 
-				document.form_page.letters.focus();
-				delete inHtml;
 				delete value;
 				delete data;
+				document.form_page.letters.focus();
 			}
 		}
 		var temp = document.form_page.letters.value;
 		temp = temp.replace(/[^a-zA-Z]+/g,'');
-		xmlhttp.open("GET", '/words/' + document.form_page.letters.value);
+		xmlhttp.open("GET", '/words/' + temp);
 		xmlhttp.send();
 		document.form_page.letters.focus();
 	}
