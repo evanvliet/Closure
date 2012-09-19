@@ -43,12 +43,20 @@ div.output {
 				value = data['ocms'];
 				inHtml = value.length ? '<small><b>similar:</b></small> ' + value.join(', ') : '';
 				document.getElementById('suggestions').innerHTML = inHtml;
+				value = data['word'];
+				if (value == document.form_page.letters.value.toLowerCase()) {
+					value = '';
+				}
+				inHtml = value.length ? '<small><b>for:</b></small> ' + value : '';
+				document.getElementById('for').innerHTML = inHtml;
 				document.form_page.letters.focus();
 				delete inHtml;
 				delete value;
 				delete data;
 			}
 		}
+		var temp = document.form_page.letters.value;
+		temp = temp.replace(/[^a-zA-Z]+/g,'');
 		xmlhttp.open("GET", '/words/' + document.form_page.letters.value);
 		xmlhttp.send();
 		document.form_page.letters.focus();
@@ -59,11 +67,12 @@ div.output {
 <body onload="on_load()">
   <form name="form_page">
       <div>
-        <input type="text" style="font-size: 14px; width: 120px"
+        <input type="text" style="font-size: 14px; width: 120px;"
           name="letters" autocorrect="off" autocomplete="off" onkeyup="find_words()" />
       </div>
       <div class="output" id="words"></div>
       <div class="output" id="suggestions"></div>
+      <div class="output" id="for"></div>
     <div id="help">
       <h2>Word Finder</h2>
       Finds anagrams and one letter variants.

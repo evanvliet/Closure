@@ -1,7 +1,9 @@
 '''one character misspelling checker'''
+import re
 import string
 import time
 import logging
+import dev_debug
 
 _start = time.clock()
 #from w1 import Words as Words
@@ -9,17 +11,14 @@ from words import Words as Words
 logging.info('Words %.2f' % (time.clock() - _start))
 
 #_Words = set([word.strip() for word in open('wlist.causes')])
-_Letters = set('abcdefghijklmnopqrstuvwxyz')
 
 def suggestions(word):
     '''Return all one letter variants of a word.'''
-    bad_chars = ''.join(set(word) - _Letters)
-    if bad_chars:
-        raise ValueError(bad_chars)
+    # dev_debug.debug_break()
     parts = [(word[:i], word[i:]) for i in range(len(word) + 1)]
-    adds = [a + c + b for a, b in parts for c in _Letters]
+    adds = [a + c + b for a, b in parts for c in string.lowercase]
     removes = [a + b[1:] for a, b in parts if b]
-    substitutes = [a + c + b[1:] for a, b in parts for c in _Letters if b]
+    substitutes = [a + c + b[1:] for a, b in parts for c in string.lowercase if b]
     transposes = [a[:-1] + b[0] + a[-1] + b[1:] for a, b in parts if a and b]
     return Words & set(adds + removes + substitutes + transposes)
 

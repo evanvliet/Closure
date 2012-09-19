@@ -58,12 +58,16 @@ def build(request):
                              })
     return HttpResponse(json, mimetype='application/json')
 
-def find_words(request, word):
+def find_words(request, word=''):
     import ocms
-    anagram_signature = ''.join(sorted(word.lower()))
+    import string
+    import re
+    word = re.sub('[^a-z]', '', word.lower())
+    anagram_signature = ''.join(sorted(word))
     anagram = word_data.get(anagram_signature, [''])
     friends = ocms.suggestions(word)
     json = simplejson.dumps({
+                             'word': word,
                              'fw': anagram,
                              'ocms': list(sorted(friends))[:5],
                              })
