@@ -64,12 +64,12 @@ def find_words(request, word=''):
     import re
     word = re.sub('[^a-z]', '', word.lower())
     anagram_signature = ''.join(sorted(word))
-    anagram = word_data.get(anagram_signature, [''])
+    anagram = word_data.get(anagram_signature, [])
     friends = ocms.suggestions(word)
     json = simplejson.dumps({
-                             'word': word,
-                             'fw': anagram,
-                             'ocms': list(sorted(friends))[:5],
+                             'for': word,
+                             'words': anagram,
+                             'suggestions': list(sorted(friends)),
                              })
     return HttpResponse(json, mimetype='application/json')
 

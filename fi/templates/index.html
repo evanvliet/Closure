@@ -38,17 +38,22 @@ div.output {
 		xmlhttp.onreadystatechange = function() {
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 				var data = JSON.parse(xmlhttp.responseText)
-				var value = data['fw'];
-				document.getElementById('words').innerHTML = '<small><b>anagrams:</b></small> ' + value.join(', ');
-				value = data['ocms'];
-				inHtml = value.length ? '<small><b>similar:</b></small> ' + value.join(', ') : '';
-				document.getElementById('suggestions').innerHTML = inHtml;
-				value = data['word'];
+		
+				var value = data['words'];
+				document.getElementById('words').innerHTML = 
+					value.length ? '<small><b>anagrams:</b></small> ' + value.join(', ') : '';
+		
+				value = data['suggestions'];
+				document.getElementById('suggestions').innerHTML = 
+					value.length ? '<small><b>similar:</b></small> ' + value.join(', ') : '';
+		
+				value = data['for'];
 				if (value == document.form_page.letters.value.toLowerCase()) {
 					value = '';
 				}
-				inHtml = value.length ? '<small><b>for:</b></small> ' + value : '';
-				document.getElementById('for').innerHTML = inHtml;
+				document.getElementById('for').innerHTML = 
+					value.length ? '<small><b>for:</b></small> ' + value : '';
+
 				document.form_page.letters.focus();
 				delete inHtml;
 				delete value;
